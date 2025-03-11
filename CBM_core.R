@@ -87,7 +87,7 @@ defineModule(sim, list(
         description           = "Disturbance description"
       )),
     expectsInput(
-      objectName = "disturbanceRasters", objectClass = "character|SpatRaster|data.table",
+      objectName = "disturbanceEvents", objectClass = "character|SpatRaster|data.table",
       desc = paste(
         "A disturbance raster must be available for every simulation year.",
         "Pixel values must be link to 'rasterID' values in the input 'mySpuDmids' table.",
@@ -97,7 +97,7 @@ defineModule(sim, list(
         "1. A named object such that the yearly disturbance raster",
         "(a character path to a raster file or a terra SpatRaster)",
         "can be accessed by subsetting the object with the 4 digit year name",
-        "(e.g. sim$disturbanceRasters[[\"1990\"]]);",
+        "(e.g. sim$disturbanceEvents[[\"1990\"]]);",
         "2. A data.table with a 'pixelIndex' column and additional columns named by disturbance year."
       )),
     expectsInput(
@@ -417,12 +417,12 @@ annual <- function(sim) {
   setkeyv(spatialDT, "pixelIndex")
 
   # 1. Read year disturbances
-  if (!as.character(time(sim)) %in% names(sim$disturbanceRasters)) stop(
+  if (!as.character(time(sim)) %in% names(sim$disturbanceEvents)) stop(
     "Disturbances for year ", time(sim), " not found")
 
-  if (!is(sim$disturbanceRasters, "data.table")){
+  if (!is(sim$disturbanceEvents, "data.table")){
 
-    annualDist <- sim$disturbanceRasters[[as.character(time(sim))]]
+    annualDist <- sim$disturbanceEvents[[as.character(time(sim))]]
 
     # Convert to SpatRaster object
     if (!is(annualDist, "SpatRaster")){
@@ -446,12 +446,12 @@ annual <- function(sim) {
       events     = terra::values(annualDist)[,1]
     )
 
-  }else if (is(sim$disturbanceRasters, "data.table")) {
+  }else if (is(sim$disturbanceEvents, "data.table")) {
 
-    if (!"pixelIndex" %in% names(sim$disturbanceRasters)) stop(
+    if (!"pixelIndex" %in% names(sim$disturbanceEvents)) stop(
       "Disturbances table must have 'pixelIndex' column")
 
-    annualDist <- sim$disturbanceRasters[, c("pixelIndex", time(sim)), with = FALSE]
+    annualDist <- sim$disturbanceEvents[, c("pixelIndex", time(sim)), with = FALSE]
     names(annualDist)[[2]] <- "events"
   }
 
