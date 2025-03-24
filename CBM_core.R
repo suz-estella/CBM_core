@@ -416,13 +416,16 @@ annual <- function(sim) {
     "'disturbanceEvents' table requires columns: 'pixelIndex', year', 'eventID'")
 
   # 2. Join disturbances with spatialDT
-  if (time(sim) %in% sim$disturbanceEvents$year){
+  annualDist <- subset(
+    sim$disturbanceEvents,
+    year == time(sim) & pixelIndex %in% spatialDT$pixelIndex
+  )
 
-    annualDist <- subset(sim$disturbanceEvents, year == time(sim))
-    if (!inherits(annualDist, "data.table")) annualDist <- data.table::as.data.table(annualDist)
+  if (nrow(annualDist) > 0){
 
-    if (any(!annualDist$pixelIndex %in% spatialDT$pixelIndex)) stop(
-      "'disturbanceMeta' pixelIndex not found in 'spatialDT'")
+    if (!inherits(annualDist, "data.table")){
+      annualDist <- data.table::as.data.table(annualDist)
+    }
 
     # Choose events for each pixel based on priority
     if ("priority" %in% names(distMeta)){
@@ -439,7 +442,8 @@ annual <- function(sim) {
       "Multiple disturbance events found in one or more pixels for year ", time(sim), ". ",
       "Use the 'disturbanceMeta' \"priority\" field to control event precendence.")
 
-    annualDist <- annualDist[, events := as.integer(first(eventID)), by = "pixelIndex"][, .(pixelIndex, events)]
+    annualDist <- annualDist[, events := as.integer(first(eventID)), by = "pixelIndex"][
+      , .(pixelIndex, events)]
 
     if ("events" %in% names(spatialDT)) spatialDT[, events := NULL]
     spatialDT <- merge(spatialDT, annualDist, by = "pixelIndex", all.x = TRUE)
