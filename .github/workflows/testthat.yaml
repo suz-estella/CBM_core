@@ -3,6 +3,7 @@ on:
     branches:
       - main
       - development
+      - testGHA
   pull_request:
     branches:
       - main
@@ -69,6 +70,8 @@ jobs:
 
       - name: Run testthat
         run: |
+
+          options(timeout = 600)
 
           # Set module branches
           options("spades.test.modules" = c(
