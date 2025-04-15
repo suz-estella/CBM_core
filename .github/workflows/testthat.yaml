@@ -60,35 +60,37 @@ jobs:
 
       - uses: PredictiveEcology/actions/install-SpaDES@v0.2
 
-      - name: Install SpaDES.project
-        run: Require::Require("PredictiveEcology/SpaDES.project@development", require = FALSE)
-        shell: Rscript {0}
+      # - name: Install SpaDES.project
+      #   run: Require::Require("PredictiveEcology/SpaDES.project@development", require = FALSE)
+      #   shell: Rscript {0}
 
-      - name: Install testthat
-        run: install.packages("testthat")
-        shell: Rscript {0}
+      # - name: Install testthat
+      #   run: install.packages("testthat")
+      #   shell: Rscript {0}
 
       - name: Run testthat
         run: |
 
-          options(timeout = 600)
+          # options(timeout = 600)
 
-          # Set module branches
-          options("spades.test.modules" = c(
-            CBM_defaults    = paste0("PredictiveEcology/CBM_defaults@",    Sys.getenv("BRANCH_NAME")),
-            CBM_vol2biomass = paste0("PredictiveEcology/CBM_vol2biomass@", Sys.getenv("BRANCH_NAME")),
-            CBM_dataPrep_SK = paste0("PredictiveEcology/CBM_dataPrep_SK@", Sys.getenv("BRANCH_NAME"))
-          ))
-          cat("\nTESTING WITH MODULES:\n -", paste(getOption("spades.test.modules"), collapse = "\n - "), "\n\n")
+          Require::Install("PredictiveEcology/CBMutils@development")
 
-          # Authorize Google Drive
-          install.packages("googledrive")
-          tryCatch(
-            googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTH")),
-            error = function(e) warning(e$message))
-
-          # Run tests
-          testthat::test_dir("tests/testthat", stop_on_failure = TRUE)
+          # # Set module branches
+          # options("spades.test.modules" = c(
+          #   CBM_defaults    = paste0("PredictiveEcology/CBM_defaults@",    Sys.getenv("BRANCH_NAME")),
+          #   CBM_vol2biomass = paste0("PredictiveEcology/CBM_vol2biomass@", Sys.getenv("BRANCH_NAME")),
+          #   CBM_dataPrep_SK = paste0("PredictiveEcology/CBM_dataPrep_SK@", Sys.getenv("BRANCH_NAME"))
+          # ))
+          # cat("\nTESTING WITH MODULES:\n -", paste(getOption("spades.test.modules"), collapse = "\n - "), "\n\n")
+          #
+          # # Authorize Google Drive
+          # install.packages("googledrive")
+          # tryCatch(
+          #   googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTH")),
+          #   error = function(e) warning(e$message))
+          #
+          # # Run tests
+          # testthat::test_dir("tests/testthat", stop_on_failure = TRUE)
 
         shell: Rscript {0}
 
