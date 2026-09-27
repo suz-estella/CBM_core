@@ -34,7 +34,7 @@ jobs:
     steps:
 
       - name: Check for Google Authorization
-        if: ${{ env.BRANCH_NAME == 'main' & env.GOOGLE_AUTH == '' }}
+        if: ${{ env.BRANCH_NAME == 'main' && env.GOOGLE_AUTH == '' }}
         run: exit 1
 
       - uses: actions/checkout@v4
