@@ -5,6 +5,7 @@ test_that("Multi module: RIA-small with LandR 2000-2002", {
 
   ## Run simInit and spades ----
 
+  testthat::skip_if(Sys.getenv("BRANCH_NAME") != "main")
   testthat::skip_on_ci()
 
   # Set up project

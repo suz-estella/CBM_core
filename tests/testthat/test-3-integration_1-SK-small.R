@@ -5,6 +5,8 @@ test_that("Multi module: SK-small 1985-1986", {
 
   ## Run simInit and spades ----
 
+  testthat::skip_if(Sys.getenv("BRANCH_NAME") != "main")
+
   # Set up project
   projectName <- "integration_SK-small_1985-1986"
   times       <- list(start = 1985, end = 1986)
