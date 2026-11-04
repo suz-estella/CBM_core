@@ -11,6 +11,11 @@ setupProjectTest <- function(
     packagePath = Sys.getenv("R_LIBS_USER"),
     ...){
 
+  tempDir <- file.path(tempdir(), "testthat-module")
+  if (testthat::is_testing()) withr::defer(
+    unlink(tempDir, recursive = TRUE),
+    envir = testthat::teardown_env(), priority = "last")
+
   # Get module directory and name
   moduleDir  <- normalizePath(test_path("../.."), winslash = "/")
   moduleName <- basename(moduleDir)
