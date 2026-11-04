@@ -4,19 +4,32 @@ if (!testthat::is_testing()){
   testthat::source_test_helpers(env = globalenv())
 }
 
-# Set module directory and name
-moduleDir  <- normalizePath(test_path("../.."), winslash = "/")
-moduleName <- basename(moduleDir)
+# # Set module directory and name
+# moduleDir  <- normalizePath(test_path("../.."), winslash = "/")
+# moduleName <- basename(moduleDir)
 
 # Source module functions
-lapply(list.files(file.path(moduleDir, "R"), pattern = "\\.R$", full.names = TRUE), source)
-for (e in parse(file.path(moduleDir, paste0(moduleName, ".R")))){
-  if (is.call(e) && identical(e[[1]], as.name("<-")) && is.name(e[[2]])) eval(e)
+if (!as.logical(Sys.getenv("CI", FALSE))){
+
+  moduleDir  <- normalizePath(test_path("../.."), winslash = "/")
+  moduleName <- basename(moduleDir)
+
+  lapply(list.files(file.path(moduleDir, "R"), pattern = "\\.R$", full.names = TRUE), source)
+  for (e in parse(file.path(moduleDir, paste0(moduleName, ".R")))){
+    if (is.call(e) && identical(e[[1]], as.name("<-")) && is.name(e[[2]])) eval(e)
+  }
 }
 
 # Set temporary output directory
-tempDir <- tempfile(moduleName)
+#tempDir <- tempfile(moduleName)
+tempDir <- tempfile("testthat-")
 if (is_testing()) withr::defer(
   unlink(tempDir, recursive = TRUE),
   envir = teardown_env(), priority = "last")
 
+# # Authorize Google Drive
+# if (Sys.getenv("GOOGLE_AUTH") != "") stop()
+# # if (Sys.getenv("GOOGLE_AUTH") != ""){
+# #   Require::Require("googledrive")
+# #   googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTH"))
+# # }

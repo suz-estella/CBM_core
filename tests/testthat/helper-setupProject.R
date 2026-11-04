@@ -11,6 +11,11 @@ setupProjectTest <- function(
     packagePath = Sys.getenv("R_LIBS_USER"),
     ...){
 
+  # Get module directory and name
+  moduleDir  <- normalizePath(test_path("../.."), winslash = "/")
+  moduleName <- basename(moduleDir)
+
+  # Set module path
   if (!testthat::is_testing() & identical(modules, moduleName)){
     modulePath <- dirname(moduleDir) # Test module in place
   }else{
@@ -20,6 +25,7 @@ setupProjectTest <- function(
     }
   }
 
+  # Set up project
   simInitInput <- SpaDES.project::setupProject(
     modules = modules,
     times   = times,
