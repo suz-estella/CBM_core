@@ -33,3 +33,6 @@ if (is_testing()) withr::defer(
 # #   Require::Require("googledrive")
 # #   googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTH"))
 # # }
+
+# Install SpaDES.project
+Require::Install("SpaDES.project", repos = "predictiveecology.r-universe.dev")
