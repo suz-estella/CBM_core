@@ -14,6 +14,14 @@ env:
 jobs:
   testthat-module:
     uses: PredictiveEcology/actions/.github/workflows/testthat-module.yaml@main
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - {os: windows-latest, r: 'release'}
+          - {os: ubuntu-latest,  r: 'release'}
+          #- {os: macOS-latest,   r: 'release'}
     with:
       module: CBM_core
 
