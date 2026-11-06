@@ -29,6 +29,7 @@ if (is_testing()) withr::defer(
 
 # # Authorize Google Drive
 if (Sys.getenv("GOOGLE_AUTH") != "") stop()
+Require::Install("googledrive")
 # # if (Sys.getenv("GOOGLE_AUTH") != ""){
 # #   Require::Require("googledrive")
 # #   googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTH"))
