@@ -274,6 +274,7 @@ spinup <- function(sim) {
     "Spinup using the default last pass disturbance type ID: ", P(sim)$default_last_pass_disturbance_type)
 
   # CBM-EXN spinup
+  browser()
   sim$cbm_vars <- cbmEXN_spinup(
     cohortDT        = merge(sim$cohortDT, sim$standDT, by = "pixelIndex", sort = FALSE, all.x = TRUE),
     growthMeta      = sim$gcMeta,
