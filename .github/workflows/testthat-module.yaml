@@ -7,6 +7,10 @@ on:
   push:
     branches: [main, development, suz-testthat]
 
+env:
+  GOOGLE_AUTH: ${{ secrets.GOOGLE_AUTH }}
+  BRANCH_NAME: ${{ github.base_ref || github.ref_name }}
+
 jobs:
   testthat-module:
     uses: PredictiveEcology/actions/.github/workflows/testthat-module.yaml@main

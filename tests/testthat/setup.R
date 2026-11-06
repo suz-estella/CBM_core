@@ -28,7 +28,7 @@ if (is_testing()) withr::defer(
   envir = teardown_env(), priority = "last")
 
 # # Authorize Google Drive
-# if (Sys.getenv("GOOGLE_AUTH") != "") stop()
+if (Sys.getenv("GOOGLE_AUTH") != "") stop()
 # # if (Sys.getenv("GOOGLE_AUTH") != ""){
 # #   Require::Require("googledrive")
 # #   googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTH"))

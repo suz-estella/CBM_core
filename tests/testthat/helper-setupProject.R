@@ -32,6 +32,7 @@ setupProjectTest <- function(
 
   # Set up project
   simInitInput <- SpaDES.project::setupProject(
+    updateRprofile = FALSE,
     modules = modules,
     times   = times,
     paths   = list(
