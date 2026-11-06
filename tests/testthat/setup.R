@@ -27,13 +27,12 @@ if (is_testing()) withr::defer(
   unlink(tempDir, recursive = TRUE),
   envir = teardown_env(), priority = "last")
 
-# # Authorize Google Drive
-if (Sys.getenv("GOOGLE_AUTH") != "") stop()
-Require::Install("googledrive")
-# # if (Sys.getenv("GOOGLE_AUTH") != ""){
-# #   Require::Require("googledrive")
-# #   googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTH"))
-# # }
-
 # Install SpaDES.project
 Require::Install("SpaDES.project", repos = "predictiveecology.r-universe.dev")
+
+# Authorize Google Drive
+if (Sys.getenv("GOOGLE_AUTH") != ""){
+  Require::Install("googledrive")
+  googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTH"))
+}
+
