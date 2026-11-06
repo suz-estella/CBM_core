@@ -7,14 +7,10 @@ on:
   push:
     branches: [main, development, suz-testthat]
 
-env:
-  GOOGLE_AUTH: ${{ secrets.GOOGLE_AUTH }}
-  BRANCH_NAME: ${{ github.base_ref || github.ref_name }}
-
 jobs:
   testthat-module:
-    uses: PredictiveEcology/actions/.github/workflows/testthat-module.yaml@main
     runs-on: ${{ matrix.config.os }}
+    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
     strategy:
       fail-fast: false
       matrix:
@@ -22,6 +18,14 @@ jobs:
           - {os: windows-latest, r: 'release'}
           - {os: ubuntu-latest,  r: 'release'}
           #- {os: macOS-latest,   r: 'release'}
-    with:
-      module: CBM_core
+
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      GOOGLE_AUTH: ${{ secrets.GOOGLE_AUTH }}
+      BRANCH_NAME: ${{ github.base_ref || github.ref_name }}
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+
+    steps:
+      uses: PredictiveEcology/actions/.github/workflows/testthat-module.yaml@main
+
 
