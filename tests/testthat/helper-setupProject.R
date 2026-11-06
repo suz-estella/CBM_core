@@ -11,14 +11,15 @@ setupProjectTest <- function(
     packagePath = Sys.getenv("R_LIBS_USER"),
     ...){
 
-  tempDir <- file.path(tempdir(), "testthat-module")
-  if (testthat::is_testing()) withr::defer(
-    unlink(tempDir, recursive = TRUE),
-    envir = testthat::teardown_env(), priority = "last")
-
   # Get module directory and name
   moduleDir  <- normalizePath(test_path("../.."), winslash = "/")
   moduleName <- basename(moduleDir)
+
+  # Set temporary directory
+  tempDir <- file.path(tempdir(), paste0("testthat-", moduleName))
+  if (testthat::is_testing()) withr::defer(
+    unlink(tempDir, recursive = TRUE),
+    envir = testthat::teardown_env(), priority = "last")
 
   # Set module path
   if (!testthat::is_testing() & identical(modules, moduleName)){
@@ -34,8 +35,8 @@ setupProjectTest <- function(
   simInitInput <- SpaDES.project::setupProject(
     updateRprofile = FALSE,
     modules = modules,
-    times   = times,
-    paths   = list(
+    times = times,
+    paths = list(
       projectPath = projectPath,
       modulePath  = modulePath,
       packagePath = packagePath,
