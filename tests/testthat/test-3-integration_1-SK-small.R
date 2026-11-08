@@ -29,6 +29,8 @@ test_that("Multi module: SK-small 1985-1986", {
     )
   )
 
+  cat("LIBPATHS: \n", .libPaths(), "\n\n\n")
+
   # Run simInit
   simTestInit <- suppressWarnings(SpaDES.core::simInit2(simInitInput))
   expect_s4_class(simTestInit, "simList")

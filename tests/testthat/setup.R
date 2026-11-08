@@ -21,17 +21,22 @@ if (!as.logical(Sys.getenv("CI", FALSE))){
 }
 
 # Set temporary output directory
-#tempDir <- tempfile(moduleName)
-tempDir <- tempfile("testthat-")
+tempDir <- file.path(tempdir(), "testthat-module")
 if (is_testing()) withr::defer(
   unlink(tempDir, recursive = TRUE),
   envir = teardown_env(), priority = "last")
 
 # Install SpaDES.project
+cat("INSTALLING SPADES.PROJECT!\n")
 Require::Install("SpaDES.project", repos = "predictiveecology.r-universe.dev")
 
 # Authorize Google Drive
+cat("TRYING TO AUTH GOOGLE DRIVE!\n")
+cat("GOOGLE_AUTH: ", Sys.getenv("GOOGLE_AUTH"), "\n")
+cat("LIBPATHS: \n", .libPaths(), "\n\n\n")
+#if (Sys.getenv("GOOGLE_AUTH") == "") stop()
 if (Sys.getenv("GOOGLE_AUTH") != ""){
+  cat("installing gd!\n\n")
   Require::Install("googledrive")
   googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTH"))
 }
