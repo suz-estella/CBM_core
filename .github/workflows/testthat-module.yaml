@@ -16,13 +16,4 @@ jobs:
     uses: PredictiveEcology/actions/.github/workflows/testthat-module.yaml@main
     with:
       module: CBM_core
-    runs-on: ${{ matrix.config.os }}
-    name: ${{ matrix.config.os }} (${{ matrix.config.r }})
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-          - {os: windows-latest, r: 'release'}
-          - {os: ubuntu-latest,  r: 'release'}
-          #- {os: macOS-latest,   r: 'release'}
 
