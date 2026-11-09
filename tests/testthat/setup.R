@@ -42,6 +42,14 @@ cat("TEST BRANCH: ", setdiff(c(Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME"
 cat("TEST BRANCH: ", c(setdiff(Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME")), ""), "development")[[1]], "\n")
 cat("\n\n")
 
+cat("TEST BRANCH: ",
+    switch(Sys.getenv("GITHUB_EVENT_NAME"), push = Sys.getenv("GITHUB_REF_NAME"), pull_request = Sys.getenv("GITHUB_BASE_REF"), "development"),
+    "\n")
+cat("TEST BRANCH: ",
+    c(push = Sys.getenv("GITHUB_REF_NAME"), pull_request = Sys.getenv("GITHUB_BASE_REF"), "" = "development")[[Sys.getenv("GITHUB_EVENT_NAME")]],
+    "\n")
+cat("\n\n")
+
 # Install SpaDES.project
 cat("INSTALLING SPADES.PROJECT!\n")
 Require::Install("SpaDES.project", repos = "predictiveecology.r-universe.dev")
