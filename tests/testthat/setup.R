@@ -26,10 +26,15 @@ if (is_testing()) withr::defer(
   unlink(tempDir, recursive = TRUE),
   envir = teardown_env(), priority = "last")
 
-cat("GITHUB_REF:",      Sys.getenv("GITHUB_REF"), "\n") # source branch
+#cat("GITHUB_REF:",      Sys.getenv("GITHUB_REF"), "\n") # source branch
 cat("GITHUB_REF_NAME:", Sys.getenv("GITHUB_REF_NAME"), "\n") # source branch
 cat("GITHUB_HEAD_REF:", Sys.getenv("GITHUB_HEAD_REF"), "\n") # source branch of PR
 cat("GITHUB_BASE_REF:", Sys.getenv("GITHUB_BASE_REF"), "\n") # target branch of PR
+cat("\n\n")
+
+cat("SKIP TESTS:", isTRUE(Sys.getenv("CI")) & !"main" %in% Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME")), "\n")
+cat("TEST BRANCH: ", Sys.getenv("GITHUB_BASE_REF", Sys.getenv("GITHUB_REF_NAME", "development")), "\n")
+cat("\n\n")
 
 # Install SpaDES.project
 cat("INSTALLING SPADES.PROJECT!\n")

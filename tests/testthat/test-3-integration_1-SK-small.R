@@ -5,17 +5,17 @@ test_that("Multi module: SK-small 1985-1986", {
 
   ## Run simInit and spades ----
 
-  #skip_if(isTRUE(Sys.getenv("CI")) & Sys.getenv("BRANCH_NAME") != "main")
+  #skip_if(isTRUE(Sys.getenv("CI")) & !"main" %in% Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME")))
 
   # Set up project
   simInitInput <- setupProjectTest(
     projectName = "integration_SK-small_1985-1986",
     times       = list(start = 1985, end = 1986),
     modules     = c(
-      paste0("PredictiveEcology/CBM_defaults@",    Sys.getenv("BRANCH_NAME", "development")),
-      paste0("PredictiveEcology/CBM_dataPrep_SK@", Sys.getenv("BRANCH_NAME", "development")),
-      paste0("PredictiveEcology/CBM_dataPrep@",    Sys.getenv("BRANCH_NAME", "development")),
-      paste0("PredictiveEcology/CBM_vol2biomass@", Sys.getenv("BRANCH_NAME", "development")),
+      paste0("PredictiveEcology/CBM_defaults@",    Sys.getenv("GITHUB_BASE_REF", Sys.getenv("GITHUB_REF_NAME", "development"))),
+      paste0("PredictiveEcology/CBM_dataPrep_SK@", Sys.getenv("GITHUB_BASE_REF", Sys.getenv("GITHUB_REF_NAME", "development"))),
+      paste0("PredictiveEcology/CBM_dataPrep@",    Sys.getenv("GITHUB_BASE_REF", Sys.getenv("GITHUB_REF_NAME", "development"))),
+      paste0("PredictiveEcology/CBM_vol2biomass@", Sys.getenv("GITHUB_BASE_REF", Sys.getenv("GITHUB_REF_NAME", "development"))),
       "CBM_core"
     ),
 
