@@ -30,11 +30,11 @@ test_that("Multi module: SK-small 1985-1986", {
   )
 
   # Run simInit
-  simTestInit <- suppressWarnings(SpaDES.core::simInit2(simInitInput))
+  simTestInit <- SpaDES.core::simInit2(simInitInput)
   expect_s4_class(simTestInit, "simList")
 
   # Run spades
-  simTest <- suppressWarnings(SpaDES.core::spades(simTestInit))
+  simTest <- SpaDES.core::spades(simTestInit)
   expect_s4_class(simTest, "simList")
 
   # Check outputs
