@@ -30,6 +30,10 @@ if (is_testing()) withr::defer(
 cat("INSTALLING SPADES.PROJECT!\n")
 Require::Install("SpaDES.project", repos = "predictiveecology.r-universe.dev")
 
+cat("GITHUB_REF:",      Sys.getenv("GITHUB_REF"), "\n") # source branch
+cat("GITHUB_HEAD_REF:", Sys.getenv("GITHUB_HEAD_REF"), "\n") # source branch of PR
+cat("GITHUB_BASE_REF:", Sys.getenv("GITHUB_BASE_REF"), "\n") # target branch of PR
+
 # Authorize Google Drive
 cat("TRYING TO AUTH GOOGLE DRIVE!\n")
 #cat("GOOGLE_AUTH: ", Sys.getenv("GOOGLE_AUTH"), "\n")
