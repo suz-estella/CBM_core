@@ -10,18 +10,20 @@ if (is_testing()) withr::defer(
   unlink(tempDir, recursive = TRUE),
   envir = teardown_env(), priority = "last")
 
-# Install SpaDES.project
-Require::Install("SpaDES.project", repos = "predictiveecology.r-universe.dev")
+if (isTRUE(as.logical(Sys.getenv("CI")))){
 
-# Authorize Google Drive
-if (Sys.getenv("GOOGLE_AUTH") != ""){
-  Require::Install("googledrive")
-  googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTH"))
-}
+  # Install SpaDES.project
+  Require::Install("SpaDES.project", repos = "predictiveecology.r-universe.dev")
 
-# Source module functions
-if (!isTRUE(as.logical(Sys.getenv("CI"))){
+  # Install and authorize Google Drive
+  if (Sys.getenv("GOOGLE_AUTH") != ""){
+    Require::Install("googledrive")
+    googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTH"))
+  }
 
+}else{
+
+  # Source module functions
   moduleDir  <- normalizePath(test_path("../.."), winslash = "/")
   moduleName <- basename(moduleDir)
 
@@ -30,5 +32,4 @@ if (!isTRUE(as.logical(Sys.getenv("CI"))){
     if (is.call(e) && identical(e[[1]], as.name("<-")) && is.name(e[[2]])) eval(e)
   }
 }
-
 
