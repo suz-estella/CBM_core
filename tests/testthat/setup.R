@@ -4,12 +4,23 @@ if (!testthat::is_testing()){
   testthat::source_test_helpers(env = globalenv())
 }
 
-# # Set module directory and name
-# moduleDir  <- normalizePath(test_path("../.."), winslash = "/")
-# moduleName <- basename(moduleDir)
+# Set temporary output directory
+tempDir <- file.path(tempdir(), "testthat-module")
+if (is_testing()) withr::defer(
+  unlink(tempDir, recursive = TRUE),
+  envir = teardown_env(), priority = "last")
+
+# Install SpaDES.project
+Require::Install("SpaDES.project", repos = "predictiveecology.r-universe.dev")
+
+# Authorize Google Drive
+if (Sys.getenv("GOOGLE_AUTH") != ""){
+  Require::Install("googledrive")
+  googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTH"))
+}
 
 # Source module functions
-if (!as.logical(Sys.getenv("CI", FALSE))){
+if (!isTRUE(as.logical(Sys.getenv("CI"))){
 
   moduleDir  <- normalizePath(test_path("../.."), winslash = "/")
   moduleName <- basename(moduleDir)
@@ -20,47 +31,4 @@ if (!as.logical(Sys.getenv("CI", FALSE))){
   }
 }
 
-# Set temporary output directory
-tempDir <- file.path(tempdir(), "testthat-module")
-if (is_testing()) withr::defer(
-  unlink(tempDir, recursive = TRUE),
-  envir = teardown_env(), priority = "last")
-
-#cat("GITHUB_REF:",      Sys.getenv("GITHUB_REF"), "\n") # source branch
-cat("GITHUB_REF_NAME:", Sys.getenv("GITHUB_REF_NAME"), "\n") # source branch
-cat("GITHUB_HEAD_REF:", Sys.getenv("GITHUB_HEAD_REF"), "\n") # source branch of PR
-cat("GITHUB_BASE_REF:", Sys.getenv("GITHUB_BASE_REF"), "\n") # target branch of PR
-cat("GITHUB_BASE_REF class:", class(Sys.getenv("GITHUB_BASE_REF")), "\n") # target branch of PR
-cat("GITHUB_BASE_REF nchar:", nchar(Sys.getenv("GITHUB_BASE_REF")), "\n") # target branch of PR
-cat("GITHUB_EVENT_NAME: ", Sys.getenv("GITHUB_EVENT_NAME"), "\n")
-cat("\n\n")
-
-cat("SKIP TESTS:", isTRUE(as.logical(Sys.getenv("CI"))) & !"main" %in% Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME")), "\n")
-cat("TEST BRANCH: ", Sys.getenv("GITHUB_BASE_REF", Sys.getenv("GITHUB_REF_NAME", "development")), "\n")
-cat("TEST BRANCH: ", na.omit(c(Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME"), unset = NA), "development"))[[1]], "\n")
-cat("TEST BRANCH: ", setdiff(c(Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME"), unset = ""), "development"), "")[[1]], "\n")
-cat("TEST BRANCH: ", c(setdiff(Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME")), ""), "development")[[1]], "\n")
-cat("TEST BRANCH: ", setdiff(c(Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME")), "development"), "")[[1]], "\n")
-cat("TEST BRANCH: ", c(setdiff(Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME")), ""), "development")[[1]], "\n")
-cat("\n\n")
-
-cat("TEST BRANCH: ",
-    switch(Sys.getenv("GITHUB_EVENT_NAME"), push = Sys.getenv("GITHUB_REF_NAME"), pull_request = Sys.getenv("GITHUB_BASE_REF"), "development"),
-    "\n")
-cat("\n\n")
-
-# Install SpaDES.project
-cat("INSTALLING SPADES.PROJECT!\n")
-Require::Install("SpaDES.project", repos = "predictiveecology.r-universe.dev")
-
-# Authorize Google Drive
-cat("TRYING TO AUTH GOOGLE DRIVE!\n")
-#cat("GOOGLE_AUTH: ", Sys.getenv("GOOGLE_AUTH"), "\n")
-cat("LIBPATHS: \n", .libPaths(), "\n\n\n")
-if (Sys.getenv("GOOGLE_AUTH") == "") stop()
-if (Sys.getenv("GOOGLE_AUTH") != ""){
-  cat("installing gd!\n\n")
-  Require::Install("googledrive")
-  googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTH"))
-}
 

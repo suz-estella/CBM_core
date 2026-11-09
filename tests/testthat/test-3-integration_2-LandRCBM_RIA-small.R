@@ -5,7 +5,7 @@ test_that("Multi module: RIA-small with LandR 2000-2002", {
 
   ## Run simInit and spades ----
 
-  skip_if(isTRUE(Sys.getenv("CI")) & Sys.getenv("BRANCH_NAME") != "main")
+  skip_if(isTRUE(as.logical(Sys.getenv("CI"))) & !"main" %in% Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME")))
   skip_on_ci()
 
   # Set up project
@@ -13,8 +13,8 @@ test_that("Multi module: RIA-small with LandR 2000-2002", {
     projectName = "integration_LandRCBM_RIA-small_2000-2002",
     times       = list(start = 2000, end = 2002),
     modules = c(
-      paste0("PredictiveEcology/Biomass_core@",         Sys.getenv("BRANCH_NAME", "development")),
-      paste0("PredictiveEcology/LandRCBM_split3pools@", Sys.getenv("BRANCH_NAME", "development")),
+      paste0("PredictiveEcology/Biomass_core@",         ifelse("main" %in% Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME")), "main", "development")),
+      paste0("PredictiveEcology/LandRCBM_split3pools@", ifelse("main" %in% Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME")), "main", "development")),
       "CBM_core"
     ),
 
