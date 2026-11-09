@@ -21,6 +21,9 @@ if (isTRUE(as.logical(Sys.getenv("CI")))){
     googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTH"))
   }
 
+  # Install exactextractr
+  Require::Install("exactextractr")
+
 }else{
 
   # Source module functions
