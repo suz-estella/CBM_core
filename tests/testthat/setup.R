@@ -31,12 +31,14 @@ cat("GITHUB_REF_NAME:", Sys.getenv("GITHUB_REF_NAME"), "\n") # source branch
 cat("GITHUB_HEAD_REF:", Sys.getenv("GITHUB_HEAD_REF"), "\n") # source branch of PR
 cat("GITHUB_BASE_REF:", Sys.getenv("GITHUB_BASE_REF"), "\n") # target branch of PR
 cat("GITHUB_BASE_REF class:", class(Sys.getenv("GITHUB_BASE_REF")), "\n") # target branch of PR
+cat("GITHUB_BASE_REF nchar:", nchar(Sys.getenv("GITHUB_BASE_REF")), "\n") # target branch of PR
 cat("\n\n")
 
 cat("SKIP TESTS:", isTRUE(as.logical(Sys.getenv("CI"))) & !"main" %in% Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME")), "\n")
 cat("TEST BRANCH: ", Sys.getenv("GITHUB_BASE_REF", Sys.getenv("GITHUB_REF_NAME", "development")), "\n")
 cat("TEST BRANCH: ", na.omit(c(Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME"), unset = NA), "development"))[[1]], "\n")
 cat("TEST BRANCH: ", setdiff(c(Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME"), unset = ""), "development"), "")[[1]], "\n")
+cat("TEST BRANCH: ", c(setdiff(Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME")), ""), "development")[[1]], "\n")
 cat("\n\n")
 
 # Install SpaDES.project
