@@ -29,13 +29,6 @@ test_that("Multi module: SK-small 1985-1986", {
     )
   )
 
-  #spadesOpt <- options()[grepl("spades|Require|reproducible", names(options()))]
-  spadesOpt <- options()[grepl("spades", names(options()))]
-  cat("\n\n")
-  stop(paste(knitr::kable(data.table::data.table(name = names(spadesOpt), option = do.call(c, spadesOpt))), collapse = "\n"))
-  cat("\n\n")
-  #cat(paste(paste0(names(spadesOpt), ": ", unlist(spadesOpt)), collapse = "\n"), "\n\n")
-
   # Run simInit
   simTestInit <- SpaDES.core::simInit2(simInitInput)
   expect_s4_class(simTestInit, "simList")
