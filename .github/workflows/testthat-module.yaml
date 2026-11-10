@@ -9,9 +9,10 @@ on:
 
 jobs:
   testthat-module:
-    uses: suz-estella/actions/.github/workflows/testthat-module.yaml@main
-    secrets: inherit
+    uses: PredictiveEcology/actions/.github/workflows/testthat-module.yaml@main
     with:
       module: CBM_core
       coverage: false
+    secrets:
+      GOOGLEDRIVE_AUTH: ${{ secrets.GOOGLE_AUTH }}
 

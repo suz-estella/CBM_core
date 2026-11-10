@@ -4,11 +4,11 @@ if (isTRUE(as.logical(Sys.getenv("CI")))){
   # Install SpaDES.project
   Require::Install("SpaDES.project", repos = "predictiveecology.r-universe.dev")
 
-  # Install and authorize Google Drive
-  if (Sys.getenv("GOOGLE_AUTH") != ""){
-    Require::Install("googledrive")
-    googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTH"))
-  }
+  # # Install and authorize Google Drive
+  # if (Sys.getenv("GOOGLE_AUTH") != ""){
+  #   Require::Install("googledrive")
+  #   googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTH"))
+  # }
 
 }else{
 
