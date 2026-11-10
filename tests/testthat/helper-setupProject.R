@@ -44,6 +44,9 @@ setupProjectTest <- function(
       cachePath   = cachePath,
       outputPath  = outputPath,
       testdata    = testthat::test_path("testdata")
+    ),
+    options = list(
+      spades.useRequire = !identical(modules, moduleName)
     )
   )
   simInitInput <- c(simInitInput, list(...))
