@@ -10,6 +10,9 @@ if (is_testing()) withr::defer(
   unlink(tempDir, recursive = TRUE),
   envir = teardown_env(), priority = "last")
 
+cat("spades.useRequire: ", getOption("spades.useRequire"), "\n")
+cat("SPADES_USE_REQUIRE: ", Sys.getenv("SPADES_USE_REQUIRE"), "\n")
+
 if (isTRUE(as.logical(Sys.getenv("CI")))){
 
   # Install SpaDES.project
