@@ -33,6 +33,7 @@ test_that("Multi module: SK-small 1985-1986", {
 
   #spadesOpt <- options()[grepl("spades|Require|reproducible", names(options()))]
   spadesOpt <- options()[grepl("spades", names(options()))]
+  spadesOpt <- options()[grepl("Require", names(options()))]
   optTable <- data.table::data.table(name = names(spadesOpt))
   optTable[, value := sapply(name, function(x) ifelse(is.null(spadesOpt[[x]]), "", as.character(spadesOpt[[x]])))]
   cat("\n\n")
