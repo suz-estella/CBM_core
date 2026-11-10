@@ -9,7 +9,7 @@ on:
 
 jobs:
   testthat-module:
-    uses: PredictiveEcology/actions/.github/workflows/testthat-module.yaml@main
+    uses: suz-estella/actions/.github/workflows/testthat-module.yaml@main
     with:
       module: CBM_core
       coverage: false
