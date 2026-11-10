@@ -26,8 +26,10 @@ setupProjectTest <- function(
     modulePath <- dirname(moduleDir) # Test module in place
   }else{
     if (!file.exists(file.path(modulePath, moduleName))){
-      dir.create(modulePath, recursive = TRUE, showWarnings = FALSE)
-      file.copy(moduleDir, modulePath, recursive = TRUE)
+      dir.create(file.path(modulePath, moduleName), recursive = TRUE, showWarnings = FALSE)
+      file.copy(file.path(moduleDir, c(paste0(moduleName, ".R"), "R", "data")),
+                file.path(modulePath, moduleName),
+                recursive = TRUE)
     }
   }
 

@@ -1,18 +1,4 @@
 
-if (!testthat::is_testing()){
-  suppressPackageStartupMessages(library(testthat))
-  testthat::source_test_helpers(env = globalenv())
-}
-
-# Set temporary output directory
-tempDir <- file.path(tempdir(), "testthat-module")
-if (is_testing()) withr::defer(
-  unlink(tempDir, recursive = TRUE),
-  envir = teardown_env(), priority = "last")
-
-cat("spades.useRequire: ", getOption("spades.useRequire"), "\n")
-cat("SPADES_USE_REQUIRE: ", Sys.getenv("SPADES_USE_REQUIRE"), "\n")
-
 if (isTRUE(as.logical(Sys.getenv("CI")))){
 
   # Install SpaDES.project
@@ -24,10 +10,12 @@ if (isTRUE(as.logical(Sys.getenv("CI")))){
     googledrive::drive_auth(path = Sys.getenv("GOOGLE_AUTH"))
   }
 
-  # # Install exactextractr
-  # Require::Install("exactextractr")
-
 }else{
+
+  if (!testthat::is_testing()){
+    suppressPackageStartupMessages(library(testthat))
+    testthat::source_test_helpers(env = globalenv())
+  }
 
   # Source module functions
   moduleDir  <- normalizePath(test_path("../.."), winslash = "/")
