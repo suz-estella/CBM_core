@@ -31,7 +31,7 @@ test_that("Multi module: SK-small 1985-1986", {
 
   spadesOpt <- options()[grepl("spades|Require|reproducible", names(options()))]
   cat("\n\n")
-  cat(paste(knitr::kable(data.table::data.table(name = names(spadesOpt), option = unlist(spadesOpt))), collapse = "\n"))
+  stop(paste(knitr::kable(data.table::data.table(name = names(spadesOpt), option = do.call(c, spadesOpt))), collapse = "\n"))
   cat("\n\n")
   #cat(paste(paste0(names(spadesOpt), ": ", unlist(spadesOpt)), collapse = "\n"), "\n\n")
 
