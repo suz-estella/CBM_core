@@ -5,33 +5,21 @@ test_that("Multi module: SK-small 1985-1986", {
 
   ## Run simInit and spades ----
 
+  #skip_if(isTRUE(as.logical(Sys.getenv("CI"))) & !"main" %in% Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME")))
+
   # Set up project
-  projectName <- "integration_SK-small_1985-1986"
-  times       <- list(start = 1985, end = 1986)
-
-  simInitInput <- SpaDES.project::setupProject(
-
-    modules = c(
-      paste0("PredictiveEcology/CBM_defaults@",    Sys.getenv("BRANCH_NAME", "development")),
-      paste0("PredictiveEcology/CBM_dataPrep_SK@", Sys.getenv("BRANCH_NAME", "development")),
-      paste0("PredictiveEcology/CBM_dataPrep@",    Sys.getenv("BRANCH_NAME", "development")),
-      paste0("PredictiveEcology/CBM_vol2biomass@", Sys.getenv("BRANCH_NAME", "development")),
+  simInitInput <- setupProjectTest(
+    projectName = "integration_SK-small_1985-1986",
+    times       = list(start = 1985, end = 1986),
+    modules     = c(
+      paste0("PredictiveEcology/CBM_defaults@",    ifelse("main" %in% Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME")), "main", "development")),
+      paste0("PredictiveEcology/CBM_dataPrep_SK@", ifelse("main" %in% Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME")), "main", "development")),
+      paste0("PredictiveEcology/CBM_dataPrep@",    ifelse("main" %in% Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME")), "main", "development")),
+      paste0("PredictiveEcology/CBM_vol2biomass@", ifelse("main" %in% Sys.getenv(c("GITHUB_BASE_REF", "GITHUB_REF_NAME")), "main", "development")),
       "CBM_core"
     ),
 
-    times   = times,
-    paths   = list(
-      projectPath = spadesTestPaths$projectPath,
-      modulePath  = spadesTestPaths$temp$modules,
-      packagePath = spadesTestPaths$packagePath,
-      inputPath   = spadesTestPaths$inputPath,
-      cachePath   = spadesTestPaths$cachePath,
-      outputPath  = file.path(spadesTestPaths$temp$outputs, projectName)
-    ),
-
     params = list(.globals = list(.plots = NA)),
-
-    require = "terra",
 
     masterRaster = terra::rast(
       ext  = c(xmin = -687696, xmax = -681036, ymin = 711955, ymax = 716183),
@@ -42,11 +30,11 @@ test_that("Multi module: SK-small 1985-1986", {
   )
 
   # Run simInit
-  simTestInit <- suppressWarnings(SpaDES.core::simInit2(simInitInput))
+  simTestInit <- SpaDES.core::simInit2(simInitInput)
   expect_s4_class(simTestInit, "simList")
 
   # Run spades
-  simTest <- suppressWarnings(SpaDES.core::spades(simTestInit))
+  simTest <- SpaDES.core::spades(simTestInit)
   expect_s4_class(simTest, "simList")
 
   # Check outputs
