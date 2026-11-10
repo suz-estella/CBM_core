@@ -13,4 +13,5 @@ jobs:
     secrets: inherit
     with:
       module: CBM_core
+      coverage: false
 
