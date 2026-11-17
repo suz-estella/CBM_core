@@ -12,6 +12,7 @@ jobs:
     uses: suz-estella/PredictiveEcology-actions/.github/workflows/testthat-module.yaml@suz-dep
     with:
       module: CBM_core
+      extra-packages: googledrive
       coverage: false
     secrets:
       GOOGLEDRIVE_AUTH: ${{ secrets.GOOGLE_AUTH }}
