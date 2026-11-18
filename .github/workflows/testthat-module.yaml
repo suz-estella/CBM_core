@@ -13,7 +13,7 @@ jobs:
     uses: suz-estella/actions/.github/workflows/testthat-modules-test.yaml@main
     with:
       module: CBM_core
-      extra-config: '[{"config":{"os":"windows-latest","r":"release"},{"os":"macOS-latest","r":"release"}}]'
+      extra-config: '[{"config":{{"os":"windows-latest","r":"release"},{"os":"macOS-latest","r":"release"}}}]'
       extra-packages: PredictiveEcology/SpaDES.project@development googledrive
       coverage: false
     secrets:
