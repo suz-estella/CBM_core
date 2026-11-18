@@ -13,7 +13,7 @@ jobs:
     uses: suz-estella/actions/.github/workflows/testthat-modules-test.yaml@main
     with:
       module: CBM_core
-      extra-packages: SpaDES.project googledrive
+      extra-packages: PredictiveEcology/SpaDES.project@development googledrive
       coverage: false
     secrets:
       GOOGLEDRIVE_AUTH: ${{ secrets.GOOGLE_AUTH }}
