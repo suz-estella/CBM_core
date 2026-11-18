@@ -19,7 +19,7 @@ jobs:
         {"config":{"os":"macOS-latest",  "r":"release"}}
         ]
       extra-packages: PredictiveEcology/SpaDES.project@development googledrive
-      coverage: false
+      coverage: true
     secrets:
       GOOGLEDRIVE_AUTH: ${{ secrets.GOOGLE_AUTH }}
 
