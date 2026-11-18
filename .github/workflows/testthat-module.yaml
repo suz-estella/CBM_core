@@ -15,8 +15,8 @@ jobs:
       module: CBM_core
       extra-config: >-
         [
-        {"config":{"os":"windows-latest","r":"release"},
-        {"config":{"os":"macOS-latest",  "r":"release"}
+        {"config":{"os":"windows-latest","r":"release"}},
+        {"config":{"os":"macOS-latest",  "r":"release"}}
         ]
       extra-packages: PredictiveEcology/SpaDES.project@development googledrive
       coverage: false
