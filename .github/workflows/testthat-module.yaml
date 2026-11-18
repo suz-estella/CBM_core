@@ -10,7 +10,7 @@ on:
 jobs:
   testthat-module:
     #uses: suz-estella/PredictiveEcology-actions/.github/workflows/testthat-module.yaml@suz-dep
-    uses: suz-estella/actions/.github/workflows/testthat-module-test.yaml@main
+    uses: suz-estella/actions/.github/workflows/testthat-modules-test.yaml@main
     with:
       module: CBM_core
       extra-packages: SpaDES.project googledrive
