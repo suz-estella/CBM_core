@@ -9,10 +9,11 @@ on:
 
 jobs:
   testthat-module:
-    uses: suz-estella/PredictiveEcology-actions/.github/workflows/testthat-module.yaml@suz-dep
+    #uses: suz-estella/PredictiveEcology-actions/.github/workflows/testthat-module.yaml@suz-dep
+    uses: suz-estella/actions/.github/workflows/testthat-module-test.yaml@main
     with:
       module: CBM_core
-      extra-packages: googledrive
+      extra-packages: SpaDES.project googledrive
       coverage: false
     secrets:
       GOOGLEDRIVE_AUTH: ${{ secrets.GOOGLE_AUTH }}
